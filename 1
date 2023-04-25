@@ -1,0 +1,270 @@
+//InOut
+
+json
+result = {"N": me.currentCommandNumber
+                    X.. Y..Z
+}
+
+//valuesRange thing shape
+xMin/max .. 
+
+//Заполнение таблицы команд
+1 fieldDefs:
+строка, название, X..
+
+2 Создайте в роботе сервис commandTableFill
+
+me.commandTable.RemoveAllRows();
+me.commandTable.AddRow({lineNumber: 0, pointName: "start", X: 195, Y: 0, T: 0, G: 163, V: 0});
+me.commandTable.AddRow({lineNumber: 1, pointName: "parking", X: 0, Y: -258, T: 0, G: 20, V: 0});
+
+//operatorMashup
+cервис nPlus
+me.currentCommandNumber = me.lastCommandNumber + 1; 
+(замена)>>
+if (Things["RemoteTerminal"].Switch == 1){
+    me.currentCommandNumber = me.lastCommandNumber + 1;
+}
+ 
+//Контроль правильности значений с 
+помощью функции
+
+1 Сни­мите га­лоч­ку у свойства ConstrainValue вид­же­та Numeric Entry PositionX
+2 в пра­вой час­ти ок­на Design во вклад­ке Functions наж­ми­те +;
+3 в от­крыв­шемся ок­не вы­бери­те тип фун­кции: Status Message;
+4 вве­дите имя фун­кции: invalidXMessage и наж­ми­те кноп­ку Next.
+5 тип error
+
+1 соз­дайте но­вую фун­кцию, на­жав + во вклад­ке Functions;
+2 вы­бери­те тип фун­кции Validator, вве­дите имя фун­кции — invalidXValidator.
+3 за­дайте ис­ходные дан­ные (ар­гу­мен­ты) для фун­кций value, xMax, xMin, ба­зовый тип па­рамет­ров — NUMBER;
+4 в по­ле Expression за­пиши­те ло­гичес­кое вы­раже­ние, за­да­ющее до­пус­ти­мый ди­апа­зон зна­чений:
+(value >= xMin) && (value <= xMax);
+5 от­метьте па­раметр Auto Evaluate
+ 
+Пос­ле соз­да­ния фун­кции-ва­лида­тора во вклад­ке Functions 
+отоб­ра­жа­ют­ся ее па­рамет­ры и со­бытия True и False, ко­торые 
+воз­ни­ка­ют, ког­да ре­зультат вы­чис­ле­ния ло­гичес­ко­го 
+вы­раже­ния ста­новит­ся рав­ным True и False со­от­ветс­твен­но.
+
+1 раз­верни­те ме­ню вид­же­та NumericEntry PositionX; зна­чение вид­же­та Value пе­ретя­ните на параметр Value  функции
+2 раз­верни­те спи­сок па­рамет­ров сер­ви­са GetProperties во 
+вклад­ке Data, пе­ретя­ните свойства xMax и xMin от робота на 
+со­от­ветс­тву­ющие па­рамет­ры фун­кции;
+3 со­бытие фун­кции False пе­ретя­ните на сер­вис ShowMessage фун­кции-со­об­ще­ния invalidXMessage, сох­ра­ните вы­пол­ненные из­ме­нения Mashup, на­жав кноп­ку Save;
+
+Создать функцию InvalidValues
+Привязать результат функции на свойство Visible кнопки 
+«ВВОД»
+result {valueX/Y/Z >= x/y/zMin)&&(valueX/Y/Z <= x/y/zMax&&
+}
+boolean
+
+///полуавтомат
+//maxCommandNum
+result = me.commTab.getRowCount() - 1
+
+свя­жите мак­си­мальное зна­чение вид­же­та NumericEntry для 
+номера строки c ре­зульта­том сер­ви­са maxNumber, а со­бытие 
+Changed (из­ме­нено) наз­начьте триг­ге­ром для сер­ви­са maxNumber
+
+//runCommandLine
+me.positionX = me.commandTable[lineNumber].X;
+me.positionY = me.commandTable[lineNumber].Y;
+me.rotation = me.commandTable[lineNumber].T;
+me.gripper = me.commandTable[lineNumber].G;
+me.vacuum = me.commandTable[lineNumber].V;
+
+me.nPlus();
+
+
+//Пе­реда­ем ко­ман­ду из стро­ки с но­мером lineNumber1
+me.positionX = me.commandTable[lineNumber1].X;
+me.positionY = me.commandTable[lineNumber1].Y;
+me.positionT = me.commandTable[lineNumber1].T;
+me.gripper = me.commandTable[lineNumber1].G;
+me.vacuum = me.commandTable[lineNumber1].V;
+me.nPlus();
+
+// па­уза в ра­боте сер­ви­са 2 се­кун­ды
+let milliseconds = pause(2000);
+
+///runMultipleComms
+- lineNumber1, lineNumber2
+//Пе­реда­ем ко­ман­ду из стро­ки с но­мером lineNumber1
+me.positionX = me.commandTable[lineNumber1].X;
+me.positionY = me.commandTable[lineNumber1].Y;
+me.positionT = me.commandTable[lineNumber1].T;
+me.gripper = me.commandTable[lineNumber1].G;
+me.vacuum = me.commandTable[lineNumber1].V;
+me.nPlus();
+
+// па­уза в ра­боте сер­ви­са 2 се­кун­ды
+delay(2000);
+
+//Пе­реда­ем ко­ман­ду из стро­ки с но­мером lineNumber2
+me.positionX = me.commandTable[lineNumber2].X;
+me.positionY = me.commandTable[lineNumber2].Y;
+me. positionT = me.commandTable[lineNumber2].T;
+me.gripper = me.commandTable[lineNumber2].G;
+me.vacuum = me.commandTable[lineNumber2].V;
+
+me.nPlus();
+
+//Пе­реда­ем ко­ман­ду из стро­ки с но­мером lineNumber2
+me.positionX = me.commandTable[lineNumber2].X;
+me.positionY = me.commandTable[lineNumber2].Y;
+me. positionT = me.commandTable[lineNumber2].T;
+me.gripper = me.commandTable[lineNumber2].G;
+me.vacuum = me.commandTable[lineNumber2].V;
+
+me.nPlus();
+
+//currentLine
+me.currentLine = -1
+
+//runAuto
+me.currentLine = 0;
+me.positionX = me.commandTable[0].X;
+me.positionY = me.commandTable[0].Y;
+me.rotation = me.commandTable[0].T;
+me.gripper = me.commandTable[0].G;
+me.vacuum = me.commandTable[0].V;
+me.nPlus();
+
+me.currentLine++;
+
+cоздать кнопку для выполнения всех комманд
+
+//lastCommNum
+На стра­нице Subscriptions 
++Add, > runNextLine, > Inputs > со­бытие DataChange + свойство lastCommandNumber
+
+if ((me.currentLine > -1) &&(me.currentLine < me.commandTable.getRowCount())){
+me.positionX = me.commandTable[me.currentLine].X;
+me.positionY = me.commandTable[me.currentLine].Y;
+me.rotation = me.commandTable[me.currentLine].T;
+me.gripper = me.commandTable[me.currentLine].G;
+me.vacuum = me.commandTable[me.currentLine].V;
+
+me.nPlus();
+me.currentLine++;
+}
+
+
+if (me.currentLine === me.commandTable.getRowCount()){ 
+    me.currentLine = -1;
+}
+
+
+//plan
+свойство в вещи ManipulatorV2 с именем plan типа String
+- В сервисе activateAutoMode после строки me.nPlus(); добавьте 
+строку
+me.plan = "RUN - " +commTab[0].pointName
+
+- В подписке runNextLine после строки me.nPlus(); добавьте строку
+me.plan += "-" + me.commandTable[me.currentLine].pointName;
+- В конце добавьте
+me.currentLine = -1;
+me.plan += "- DONE";
+
+
+///Авто выполнение последовательности точек
+
+/Разместите на fieldset автоматического режима 2 текстовых поля 
+textfield и кнопку button. 
+
+- В свойствах робота добавляем свойство cycle строкового типа. В этом свойстве будет храниться последовательность команд с 
+  разделителем, например «1 12 0 8»
+
+- Также создаем свойство строкового типа plan для записи туда последовательности точек при выполнении
+
+- Внутри робота создаем сервис goAuto - Этот сервис должен преобразовывать заданную 
+  последовательность из текста в набор (массив) номеров команд и 
+  выполнять их по очереди
+ 
+//goAuto
+let cycle = me.cycle.split(' ').map(Number);
+me.plan = "RUN ";
+// теперь в cycle у нас последовательность номеров строк, которую нужно выполнить для кода
+for (let i = 0; i < cycle.length; i++){
+    //выполнить строку
+    me.positionX = me.commandTable[cycle[i]].x;
+    me.positionY = me.commandTable[cycle[i]].y;
+    me.positionT = me.commandTable[cycle[i]].t;
+    me.gripper = me.commandTable[cycle[i]].g;
+    me.vacuum = me.commandTable[cycle[i]].v;
+    me.nPlus();
+
+    // дописываем текст в план 
+    me.plan += "-" + me.commandTable[cycle[i]].pointName;
+
+    // пауза
+    let pausa = pause(2000);
+}
+
+
+///сборка
+//Общий алгоритм перемещения 1 детали из токи A в точку B
+Чтобы переместить из точки A в точку B:
+A верх, захват выкл
+A низ, захват выкл
+А низ, захват вкл
+А верх, захват вкл
+B верх, захват вкл
+B низ, захват выкл
+B верх, захват выкл
+
+
+//code св-во
+
+- Передача кода от штрихкод-ридера
+	В вещи штрихкод-ридера создайте сервис codeToRobot
+	Сервис имеет 1 вход (inputs) типа Boolean под названием 
+	autoCode. 
+	Далее мы привяжем его к переключателю на мэшапе. Если 
+	переключатель включен (true), то берем код от штрихкод-ридера, 
+	если выключен (false), то берем код с мэшапа
+	if (autoCode == true){
+	Things["Manipulator"].code = me.c
+
+- В роботе также нужен сервис, который будет читать код, но уже с 
+  мэшапа, и записывать его в свойство 
+  code робота
+
+	Создайте в вещи манипулятора сервис 
+	mashupCodeToRobot
+	Создайте в сервисе два входа (Inputs):
+	autoCode, тип Boolean, для чтения 
+	значения переключателя
+	code, тип строка, для чтения кода с 
+	мэшапа
+	if (autoCode == false) {
+	me.code = code;
+	}
+	
+//RunCode
+switch (me.code) {
+    case "101":
+        me.plan = "CODE 101 - ";
+        me.code101();
+        break;
+    case "202":
+        me.plan = "CODE 202 - ";
+        me.code202();
+        break;
+    case "303":
+        me.plan = "CODE 303 - ";
+        me.code303();
+        break;
+    default:
+        me.plan = "INVALID CODE!";
+}
+
+
+
+
+
+
+
